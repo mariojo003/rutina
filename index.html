@@ -7,9 +7,9 @@
 <link rel="apple-touch-icon" href="icon.png">
 <meta name="apple-mobile-web-app-title" content="Mi rutina">
 <style>
-:root{--bg:#eef2f6;--card:#fff;--text:#0f1b2d;--muted:#5d6b80;--line:#d5dce6;--acc:#2f5bff;--accink:#fff;--ok:#0f9d8a;--okbg:#dff5f1;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1420;--card:#16202f;--text:#e8edf5;--muted:#93a1b6;--line:#2a374b;--acc:#7b96ff;--accink:#0d1420;--ok:#3cc9b4;--okbg:#14332f;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0d1420;--card:#16202f;--text:#e8edf5;--muted:#93a1b6;--line:#2a374b;--acc:#7b96ff;--accink:#0d1420;--ok:#3cc9b4;--okbg:#14332f;color-scheme:dark}
+:root{--bg:#f4f2ee;--card:#fff;--text:#1b1a17;--muted:#6b665e;--line:#e2ded6;--acc:#d9480f;--accink:#fff;--ok:#0f9d8a;--okbg:#dff5f1;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1013;--card:#171a21;--text:#eef0f4;--muted:#98a0ae;--line:#272c36;--acc:#ff8a3d;--accink:#1a0d03;--ok:#3cc9b4;--okbg:#10302b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1013;--card:#171a21;--text:#eef0f4;--muted:#98a0ae;--line:#272c36;--acc:#ff8a3d;--accink:#1a0d03;--ok:#3cc9b4;--okbg:#10302b;color-scheme:dark}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
 body{margin:0;background:var(--bg);color:var(--text);font:16px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;font-variant-numeric:tabular-nums}
@@ -101,6 +101,12 @@ body.prog header,body.prog #mt{display:none}#vp{display:none}body.prog #vp{displ
 #vp select{width:100%;height:46px;margin:10px 0 6px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);font-size:16px;font-family:inherit;padding:0 10px}
 .gr{display:grid;grid-template-columns:72px 1fr 78px;gap:8px;align-items:center;margin:9px 0;font-size:14px}.gr b{font-size:15px}.gb{height:10px;border-radius:5px;background:var(--line);overflow:hidden}.gb i{display:block;height:100%;border-radius:5px}.gr span{color:var(--muted);font-size:12px;text-align:right}
 .lg{display:flex;align-items:center;gap:8px;font-size:13px;margin:6px 0}.lg i{width:14px;height:4px;border-radius:2px;flex:none}.lg span{flex:1;min-width:0}.lg b{white-space:nowrap}
+#vp .card{border-radius:20px;padding:16px 14px 12px}
+.ch{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.chl{min-width:0}
+.pr{flex:none;min-width:66px;text-align:center;border:1px solid var(--line);border-radius:12px;padding:6px 8px;background:var(--bg)}.pr small{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.pr b{font-size:20px;line-height:1.15}.pr b span{font-size:12px;color:var(--muted);font-weight:600}
+.ln,.lg{transition:opacity .25s;cursor:pointer}.card[data-sel] .ln:not(.on),.card[data-sel] .lg:not(.on){opacity:.18}
+.pl{opacity:0;transition:opacity .2s;pointer-events:none}.ln.on .pl{opacity:1}.ar{opacity:0;transition:opacity .25s;pointer-events:none}.ln.on .ar{opacity:1}
+#vp svg{overflow:visible;margin-top:6px}
 </style>
 </head>
 <body>
@@ -151,6 +157,7 @@ function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp
 function exs(d){var c=(S.cx&&S.cx[d.id])||[];return d.ex.concat(c.map(function(x){return [x.n,x.s||1,'','',1,x.g||''];}));}
 var MG={"Press banca plano": "pecho", "Press inclinado mancuernas": "pecho", "Cruces en polea desde arriba": "pecho", "Press inclinado multipower": "pecho", "Press de pecho en máquina": "pecho", "Pec-dec": "pecho", "Crucifijo (hombro lateral)": "hombro", "Elevaciones laterales en polea": "hombro", "Pec-dec inverso": "hombro", "Press militar": "hombro", "Elevaciones laterales con mancuernas": "hombro", "Face pull": "hombro", "Press francés barra Z": "triceps", "Extensión de tríceps polea triángulo": "triceps", "Tríceps cuerda desde arriba": "triceps", "Extensión de tríceps con barra": "triceps", "Jalón al pecho abierto": "espalda", "Remo unilateral vertical": "espalda", "Remo en polea baja": "espalda", "Pull-over en polea": "espalda", "Remo en máquina abierto": "espalda", "Jalón unilateral en polea alta": "espalda", "Remo en polea baja cerrado": "espalda", "Curl bayesiano": "biceps", "Curl predicador": "biceps", "Curl martillo con mancuernas": "biceps", "Curl con barra Z": "biceps", "Sentadilla en máquina": "pierna", "Extensión de cuádriceps": "pierna", "Curl isquiotibiales sentado": "pierna", "Hip thrust": "pierna", "Aductor sentado": "pierna", "Gemelo en prensa": "pierna", "Prensa inclinada": "pierna", "Aperturas sentado": "pierna", "Curl isquiotibiales tumbado": "pierna", "Gemelos en prensa": "pierna"},GN={pecho:'Pecho',espalda:'Espalda',hombro:'Hombro',biceps:'Bíceps',triceps:'Tríceps',pierna:'Pierna'};
 function gt(e){var g=e[4]?(e[5]||''):(MG[e[0]]||'');return g&&GN[g]?'<span class="grp g-'+g+'">'+GN[g]+'</span>':'';}
+function pbox(l){var m=0;(l||[]).forEach(function(s){var n=parseFloat(String(s.k||'').replace(',','.'));if(n>m)m=n;});return '<div class="pr" title="Peso más alto de la última sesión"><small>Último máx.</small><b>'+(m?String(m).replace('.',',')+'<span> kg</span>':'–')+'</b></div>';}
 function hid(d,i){var k=d.id+'-'+i;return !!((S.hide&&S.hide[k])||(S.purge&&S.purge[k]));}
 function nsOf(d,i,e){return (S.ns&&S.ns[d.id+'-'+i])||e[1];}
 function migrate(){
@@ -196,7 +203,7 @@ function render(){
    +'<button class="fb'+(s.f?' on':'')+'" data-act="f" data-i="'+i+'" data-j="'+j+'" aria-pressed="'+(!!s.f)+'" aria-label="Fallo serie '+(j+1)+'"'+(s.d?' disabled':'')+'>'+(s.f?'Sí':'No')+'</button>'
    +'<button class="chk" data-act="d" data-i="'+i+'" data-j="'+j+'" aria-label="Serie '+(j+1)+' hecha">✓</button></div>';
   }
-  return '<section class="card"><h2>'+esc(e[0])+'</h2><div class="meta">'+gt(e)+m+' series'+(e[2]?', '+e[2]+' repeticiones':'')+'</div><div class="last">'+lt+'</div>'+hist(d.id+'-'+i)+'<div class="cols"><span></span><span>kg</span><span>reps</span><span>Fallo</span><span></span></div>'+rows+'<div class="adj"><button class="mini rm" data-act="r" data-i="'+i+'">Quitar ejercicio</button><button class="mini" data-act="m" data-i="'+i+'"'+(m<=1?' disabled':'')+'>− serie</button><button class="mini" data-act="p" data-i="'+i+'"'+(m>=10?' disabled':'')+'>+ serie</button></div></section>';
+  return '<section class="card"><div class="ch"><div class="chl"><h2>'+esc(e[0])+'</h2><div class="meta">'+gt(e)+m+' series'+(e[2]?', '+e[2]+' repeticiones':'')+'</div></div>'+pbox(last)+'</div><div class="last">'+lt+'</div>'+hist(d.id+'-'+i)+'<div class="cols"><span></span><span>kg</span><span>reps</span><span>Fallo</span><span></span></div>'+rows+'<div class="adj"><button class="mini rm" data-act="r" data-i="'+i+'">Quitar ejercicio</button><button class="mini" data-act="m" data-i="'+i+'"'+(m<=1?' disabled':'')+'>− serie</button><button class="mini" data-act="p" data-i="'+i+'"'+(m>=10?' disabled':'')+'>+ serie</button></div></section>';
  }).join('');
  $('rec').innerHTML=(function(){var h='';exs(d).forEach(function(e,i){if(S.hide[d.id+'-'+i]&&!S.purge[d.id+'-'+i])h+='<span class="ri"><button class="mini" data-act="u" data-i="'+i+'">↺ '+esc(e[0])+'</button><button class="mini" data-act="z" data-i="'+i+'" aria-label="Borrar definitivamente '+esc(e[0])+'">✕</button></span>';});return h?'<p class="sub" style="margin:14px 0 6px">Quitados, toca para recuperar:</p><div class="rl">'+h+'</div>':'';})();
  prog();
@@ -254,7 +261,7 @@ render();
 <nav id="bnav" aria-label="Secciones"><button id="b1" aria-current="true"><svg viewBox="0 0 24 24"><path d="M6 6v12M18 6v12M3 9v6M21 9v6M6 12h12"/></svg>Entrenar</button><button id="b2"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 15l4-4 3 3 5-6"/></svg>Progreso</button></nav>
 <script>
 (function(){
-var GO=['pecho','espalda','hombro','biceps','triceps','pierna'],LC=['#2f6bff','#ef4444','#22c55e','#eab308','#a855f7','#f97316','#14b8a6','#ec4899'];
+var GO=['pecho','espalda','hombro','biceps','triceps','pierna'],LC=['#ff8a3d','#38bdf8','#a3e635','#f472b6','#a78bfa','#facc15','#2dd4bf','#fb7185'];
 function num(v){var n=parseFloat(String(v==null?'':v).replace(',','.'));return isNaN(n)?0:n;}
 function f1(n){return n.toFixed(1).replace('.',',');}
 function sg(n){return (n>=0?'+':'')+Math.round(n)+'%';}
@@ -263,28 +270,37 @@ function dn(d){var a=d.split('-');return Math.round(Date.UTC(+a[0],+a[1]-1,+a[2]
 function dm(d){var a=d.split('-');return a[2]+'/'+a[1];}
 function exList(){var o=[];R.forEach(function(d){exs(d).forEach(function(e,i){o.push({k:d.id+'-'+i,n:e[0],g:e[4]?(e[5]||''):(MG[e[0]]||'')});});});return o;}
 function sess(k){return (S.hist[k]||[]).map(function(h){var b=0;(h.s||[]).forEach(function(x){var r=num(x.r),w=num(x.k);if(w>0&&r>0)b=Math.max(b,r===1?w:w*(1+r/30));});return {d:h.d,v:b};}).filter(function(x){return x.v>0;}).sort(function(a,b){return a.d<b.d?-1:1;});}
-function gchart(ls){
- var W=340,H=210,L=44,RR=12,T=14,B=26,xs=[],ys=[];
- ls.forEach(function(l){l.q=l.p.map(function(x){return {x:dn(x.d),y:(x.v/l.p[0].v-1)*100,d:x.d};});l.q.forEach(function(z){xs.push(z.x);ys.push(z.y);});});
+function gchart(ls,gi){
+ var W=340,H=220,L=42,RR=22,T=18,B=26,xs=[],ys=[];
+ ls.forEach(function(l){l.q=l.p.map(function(x){return {x:dn(x.d),y:(x.v/l.p[0].v-1)*100};});l.q.forEach(function(z){xs.push(z.x);ys.push(z.y);});});
  var x0=Math.min.apply(0,xs),x1=Math.max.apply(0,xs),mn=Math.min(0,Math.min.apply(0,ys)),mx=Math.max(0,Math.max.apply(0,ys));
- if(x1===x0)x1=x0+1;if(mx-mn<4){mx+=2;mn-=2;}var pd=(mx-mn)*.12;mn-=pd;mx+=pd;
+ if(x1===x0)x1=x0+1;if(mx-mn<4){mx+=2;mn-=2;}var pd=(mx-mn)*.14;mn-=pd;mx+=pd;
  function X(x){return L+(W-L-RR)*(x-x0)/(x1-x0);}function Y(v){return T+(H-T-B)*(1-(v-mn)/(mx-mn));}
- var g='';[mn,0,mx].forEach(function(v,i){g+='<line x1="'+L+'" x2="'+(W-RR)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" style="stroke:var(--line)"'+(v===0?' stroke-dasharray="4 4"':'')+'/><text x="'+(L-6)+'" y="'+(Y(v)+4)+'" text-anchor="end" font-size="11" style="fill:var(--muted)">'+sg(v)+'</text>';});
- var body=ls.map(function(l){var pts=l.q.map(function(z){return X(z.x)+','+Y(z.y);}).join(' ');
-  return (l.q.length>1?'<polyline points="'+pts+'" fill="none" stroke-width="2.2" stroke-linejoin="round" stroke="'+l.c+'"/>':'')+l.q.map(function(z){return '<circle cx="'+X(z.x)+'" cy="'+Y(z.y)+'" r="3" fill="'+l.c+'"/>';}).join('');}).join('');
+ var g='',defs='';[mn,0,mx].forEach(function(v){g+='<line x1="'+L+'" x2="'+(W-RR)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke-width="1" style="stroke:var(--line)"'+(v===0?' stroke-dasharray="5 5"':'')+'/><text x="'+(L-8)+'" y="'+(Y(v)+4)+'" text-anchor="end" font-size="11" style="fill:var(--muted)">'+sg(v)+'</text>';});
+ var body=ls.map(function(l,i){
+  var P=l.q.map(function(z){return [X(z.x),Y(z.y)];}),d='M'+P[0][0]+','+P[0][1],id='g'+gi+'-'+i;
+  for(var k=1;k<P.length;k++){var a=P[k-1],b=P[k],m=(a[0]+b[0])/2;d+=' C'+m+','+a[1]+' '+m+','+b[1]+' '+b[0]+','+b[1];}
+  defs+='<linearGradient id="'+id+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+l.c+'" stop-opacity=".38"/><stop offset="1" stop-color="'+l.c+'" stop-opacity="0"/></linearGradient>';
+  var o='<g class="ln" data-i="'+i+'">';
+  if(P.length>1)o+='<path class="ar" d="'+d+' L'+P[P.length-1][0]+','+Y(0)+' L'+P[0][0]+','+Y(0)+'Z" fill="url(#'+id+')"/><path d="'+d+'" fill="none" stroke="'+l.c+'" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="'+d+'" fill="none" stroke="transparent" stroke-width="20"/>';
+  P.forEach(function(p,k){var la=k===P.length-1;o+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="14" fill="transparent"/><circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+(la?5.5:3.4)+'" fill="'+l.c+'" stroke-width="2.2" style="stroke:var(--card)"/><text class="pl" x="'+p[0]+'" y="'+(p[1]-11)+'" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--text)">'+sg(l.q[k].y)+'</text>';});
+  return o+'</g>';}).join('');
  var da=[],db=[];ls.forEach(function(l){da.push(l.p[0].d);db.push(l.p[l.p.length-1].d);});da.sort();db.sort();
- return '<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Evolución por ejercicio">'+g+body+'<text x="'+L+'" y="'+(H-6)+'" font-size="11" style="fill:var(--muted)">'+dm(da[0])+'</text><text x="'+(W-RR)+'" y="'+(H-6)+'" text-anchor="end" font-size="11" style="fill:var(--muted)">'+dm(db[db.length-1])+'</text></svg>';}
+ return '<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Evolución por ejercicio"><defs>'+defs+'</defs>'+g+body+'<text x="'+L+'" y="'+(H-6)+'" font-size="11" style="fill:var(--muted)">'+dm(da[0])+'</text><text x="'+(W-RR)+'" y="'+(H-6)+'" text-anchor="end" font-size="11" style="fill:var(--muted)">'+dm(db[db.length-1])+'</text></svg>';}
 window.renderProg=function(){
  var all=exList(),cur=mon(isoLocal(new Date())),ws=[0,1,2,3,4].map(function(i){var a=cur.split('-'),d=new Date(+a[0],+a[1]-1,+a[2]);d.setDate(d.getDate()-7*i);return isoLocal(d);}),wk={};
  all.forEach(function(e){if(!e.g)return;(S.hist[e.k]||[]).forEach(function(h){var w=mon(h.d),i=ws.indexOf(w);if(i<0)return;(wk[e.g]=wk[e.g]||[0,0,0,0,0])[i]+=(h.s||[]).length;});});
- $('pgr').innerHTML=GO.map(function(g){
+ $('pgr').innerHTML=GO.map(function(g,gi){
   var c=wk[g]||[0,0,0,0,0],pr=(c[1]+c[2]+c[3]+c[4])/4,
   ls=all.filter(function(e){return e.g===g;}).map(function(e,i){return {n:e.n,c:LC[i%LC.length],p:sess(e.k)};}).filter(function(l){return l.p.length;}),
   h='<section class="card"><h2><span class="grp g-'+g+'">'+GN[g]+'</span></h2><div class="meta">Esta semana: '+c[0]+' series · media 4 semanas anteriores: '+f1(pr)+'</div>';
   if(!ls.length)return h+'<p class="meta">Todavía no hay sesiones guardadas de este grupo.</p></section>';
-  h+=gchart(ls);
-  h+=ls.map(function(l){var a=l.p[0].v,z=l.p[l.p.length-1].v;return '<div class="lg"><i style="background:'+l.c+'"></i><span>'+esc(l.n)+'</span><b>'+f1(z)+' kg'+(l.p.length>1?' · '+sg((z/a-1)*100):' · 1 sesión')+'</b></div>';}).join('');
+  h+=gchart(ls,gi);
+  h+=ls.map(function(l,i){var a=l.p[0].v,z=l.p[l.p.length-1].v;return '<div class="lg" data-i="'+i+'"><i style="background:'+l.c+'"></i><span>'+esc(l.n)+'</span><b>'+f1(z)+' kg'+(l.p.length>1?' · '+sg((z/a-1)*100):' · 1 sesión')+'</b></div>';}).join('');
   return h+'</section>';}).join('');};
+$('pgr').addEventListener('click',function(e){var c=e.target.closest('.card');if(!c)return;var t=e.target.closest('[data-i]'),i=t?t.dataset.i:'';
+ if(!i||c.dataset.sel===i){delete c.dataset.sel;c.querySelectorAll('.on').forEach(function(x){x.classList.remove('on');});return;}
+ c.dataset.sel=i;c.querySelectorAll('[data-i]').forEach(function(x){x.classList.toggle('on',x.dataset.i===i);});});
 function show(p){document.body.classList.toggle('prog',p);$('b1').setAttribute('aria-current',!p);$('b2').setAttribute('aria-current',p);if(p)window.renderProg();window.scrollTo(0,0);}
 $('b1').onclick=function(){show(false);};$('b2').onclick=function(){show(true);};
 })();
