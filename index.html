@@ -90,6 +90,9 @@ input:disabled{opacity:.75;-webkit-text-fill-color:var(--text)}
 .mini:disabled{opacity:.45}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 #ov{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;text-align:center}#ov.off{display:none}#ov .btn{max-width:320px}
+.grp{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;margin-right:7px;color:var(--text);background:var(--line)}
+.g-pecho{background:rgba(239,68,68,.25)}.g-espalda{background:rgba(59,130,246,.25)}.g-hombro{background:rgba(234,179,8,.3)}.g-pierna{background:rgba(34,197,94,.25)}.g-triceps{background:rgba(168,85,247,.25)}.g-biceps{background:rgba(249,115,22,.28)}
+.addx{flex-wrap:wrap}.addx input{flex:1 1 100%}.addx select{flex:1;min-width:0;height:46px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);font-size:16px;font-family:inherit;padding:0 10px}
 </style>
 </head>
 <body>
@@ -98,7 +101,7 @@ input:disabled{opacity:.75;-webkit-text-fill-color:var(--text)}
 <h1 id="title"></h1>
 <p class="sub"><span id="pg"></span><span id="dt"></span></p>
 <div id="main"></div>
-<div class="addx"><input id="nx" maxlength="60" placeholder="Nombre del ejercicio nuevo" aria-label="Nombre del ejercicio nuevo"><button class="btn sec" id="ax">Añadir ejercicio</button></div>
+<div class="addx"><input id="nx" maxlength="60" placeholder="Nombre del ejercicio nuevo" aria-label="Nombre del ejercicio nuevo"><select id="ng" aria-label="Grupo muscular"><option value="">Grupo muscular…</option><option value="pecho">Pecho</option><option value="espalda">Espalda</option><option value="hombro">Hombro</option><option value="biceps">Bíceps</option><option value="triceps">Tríceps</option><option value="pierna">Pierna</option></select><button class="btn sec" id="ax">Añadir ejercicio</button></div>
 <div id="rec"></div>
 <button class="btn" id="fin">Terminar sesión</button>
 <button class="btn sec" id="clr" style="margin-top:10px">Vaciar lo escrito</button>
@@ -137,7 +140,9 @@ var cur=fromHash(),E=null;
 function day(){return R.filter(function(x){return x.id===cur})[0];}
 function getSet(i,j){var dr=S.draft[cur]||(S.draft[cur]={});var a=dr[i]||(dr[i]=[]);return a[j]||(a[j]={});}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
-function exs(d){var c=(S.cx&&S.cx[d.id])||[];return d.ex.concat(c.map(function(x){return [x.n,x.s||1,'','',1];}));}
+function exs(d){var c=(S.cx&&S.cx[d.id])||[];return d.ex.concat(c.map(function(x){return [x.n,x.s||1,'','',1,x.g||''];}));}
+var MG={"Press banca plano": "pecho", "Press inclinado mancuernas": "pecho", "Cruces en polea desde arriba": "pecho", "Press inclinado multipower": "pecho", "Press de pecho en máquina": "pecho", "Pec-dec": "pecho", "Crucifijo (hombro lateral)": "hombro", "Elevaciones laterales en polea": "hombro", "Pec-dec inverso": "hombro", "Press militar": "hombro", "Elevaciones laterales con mancuernas": "hombro", "Face pull": "hombro", "Press francés barra Z": "triceps", "Extensión de tríceps polea triángulo": "triceps", "Tríceps cuerda desde arriba": "triceps", "Extensión de tríceps con barra": "triceps", "Jalón al pecho abierto": "espalda", "Remo unilateral vertical": "espalda", "Remo en polea baja": "espalda", "Pull-over en polea": "espalda", "Remo en máquina abierto": "espalda", "Jalón unilateral en polea alta": "espalda", "Remo en polea baja cerrado": "espalda", "Curl bayesiano": "biceps", "Curl predicador": "biceps", "Curl martillo con mancuernas": "biceps", "Curl con barra Z": "biceps", "Sentadilla en máquina": "pierna", "Extensión de cuádriceps": "pierna", "Curl isquiotibiales sentado": "pierna", "Hip thrust": "pierna", "Aductor sentado": "pierna", "Gemelo en prensa": "pierna", "Prensa inclinada": "pierna", "Aperturas sentado": "pierna", "Curl isquiotibiales tumbado": "pierna", "Gemelos en prensa": "pierna"},GN={pecho:'Pecho',espalda:'Espalda',hombro:'Hombro',biceps:'Bíceps',triceps:'Tríceps',pierna:'Pierna'};
+function gt(e){var g=e[4]?(e[5]||''):(MG[e[0]]||'');return g&&GN[g]?'<span class="grp g-'+g+'">'+GN[g]+'</span>':'';}
 function hid(d,i){var k=d.id+'-'+i;return !!((S.hide&&S.hide[k])||(S.purge&&S.purge[k]));}
 function nsOf(d,i,e){return (S.ns&&S.ns[d.id+'-'+i])||e[1];}
 function migrate(){
@@ -183,7 +188,7 @@ function render(){
    +'<button class="fb'+(s.f?' on':'')+'" data-act="f" data-i="'+i+'" data-j="'+j+'" aria-pressed="'+(!!s.f)+'" aria-label="Fallo serie '+(j+1)+'"'+(s.d?' disabled':'')+'>'+(s.f?'Sí':'No')+'</button>'
    +'<button class="chk" data-act="d" data-i="'+i+'" data-j="'+j+'" aria-label="Serie '+(j+1)+' hecha">✓</button></div>';
   }
-  return '<section class="card"><h2>'+esc(e[0])+'</h2><div class="meta">'+m+' series'+(e[2]?', '+e[2]+' repeticiones':'')+'</div><div class="last">'+lt+'</div>'+hist(d.id+'-'+i)+'<div class="cols"><span></span><span>kg</span><span>reps</span><span>Fallo</span><span></span></div>'+rows+'<div class="adj"><button class="mini rm" data-act="r" data-i="'+i+'">Quitar ejercicio</button><button class="mini" data-act="m" data-i="'+i+'"'+(m<=1?' disabled':'')+'>− serie</button><button class="mini" data-act="p" data-i="'+i+'"'+(m>=10?' disabled':'')+'>+ serie</button></div></section>';
+  return '<section class="card"><h2>'+esc(e[0])+'</h2><div class="meta">'+gt(e)+m+' series'+(e[2]?', '+e[2]+' repeticiones':'')+'</div><div class="last">'+lt+'</div>'+hist(d.id+'-'+i)+'<div class="cols"><span></span><span>kg</span><span>reps</span><span>Fallo</span><span></span></div>'+rows+'<div class="adj"><button class="mini rm" data-act="r" data-i="'+i+'">Quitar ejercicio</button><button class="mini" data-act="m" data-i="'+i+'"'+(m<=1?' disabled':'')+'>− serie</button><button class="mini" data-act="p" data-i="'+i+'"'+(m>=10?' disabled':'')+'>+ serie</button></div></section>';
  }).join('');
  $('rec').innerHTML=(function(){var h='';exs(d).forEach(function(e,i){if(S.hide[d.id+'-'+i]&&!S.purge[d.id+'-'+i])h+='<span class="ri"><button class="mini" data-act="u" data-i="'+i+'">↺ '+esc(e[0])+'</button><button class="mini" data-act="z" data-i="'+i+'" aria-label="Borrar definitivamente '+esc(e[0])+'">✕</button></span>';});return h?'<p class="sub" style="margin:14px 0 6px">Quitados, toca para recuperar:</p><div class="rl">'+h+'</div>':'';})();
  prog();
@@ -211,7 +216,7 @@ $('rec').addEventListener('click',function(e){var b=e.target.closest('[data-act=
  if(b.dataset.act==='u'){delete S.hide[k];save();render();return;}
  if(b.dataset.arm!=='1'){b.dataset.arm='1';b.textContent='¿Borrar para siempre?';b.classList.add('arm');setTimeout(function(){if(b.isConnected&&b.dataset.arm==='1'){b.dataset.arm='';b.textContent='✕';b.classList.remove('arm');}},3500);return;}
  S.purge[k]=1;delete S.hide[k];delete S.hist[k];delete S.last[k];delete S.ns[k];if(S.draft[cur])delete S.draft[cur][b.dataset.i];save();render();});
-$('ax').onclick=function(){var v=$('nx').value.trim();if(!v)return;var d=day();(S.cx[d.id]=S.cx[d.id]||[]).push({n:v.slice(0,60),s:1});$('nx').value='';save();render();var cs=main.querySelectorAll('.card');if(cs.length)cs[cs.length-1].scrollIntoView({block:'center'});};
+$('ax').onclick=function(){var v=$('nx').value.trim();if(!v)return;var g=$('ng').value;if(!g){$('ng').focus();$('ng').style.borderColor='#e5484d';return;}$('ng').style.borderColor='';var d=day();(S.cx[d.id]=S.cx[d.id]||[]).push({n:v.slice(0,60),s:1,g:g});$('nx').value='';$('ng').value='';save();render();var cs=main.querySelectorAll('.card');if(cs.length)cs[cs.length-1].scrollIntoView({block:'center'});};
 $('nx').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();$('ax').onclick();}});
 main.addEventListener('click',function(e){var b=e.target.closest('[data-act="m"],[data-act="p"]');if(!b)return;var d=day(),i=+b.dataset.i,ex=exs(d)[i],c=nsOf(d,i,ex);
  if(b.dataset.act==='p'){if(c<10)c++;}else if(c>1){c--;var a=(S.draft[d.id]||{})[i];if(a&&a.length>c)a.length=c;}
